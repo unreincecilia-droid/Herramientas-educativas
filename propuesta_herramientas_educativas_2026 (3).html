@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta de Herramientas Educativas Digitales 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#11111e;--ink2:#44445a;--ink3:#8a8aaa;
+  --bg:#f4f3ef;--surface:#fff;--s2:#edecea;
+  --gr:#0d6a3d;--gr-bg:#e3f5eb;
+  --am:#865400;--am-bg:#fff2ca;
+  --rd:#a32626;--rd-bg:#fce6e6;
+  --bl:#1840a0;--bl-bg:#e4ecfb;
+  --bdr:#dbd9d3;--r:10px;--rl:16px;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink)}
+
+/* ─── COVER ─── */
+.cover{background:var(--ink);color:#fff;padding:60px 56px 50px;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-120px;right:-120px;width:560px;height:560px;border-radius:50%;background:rgba(255,255,255,.03);pointer-events:none}
+.cover::after{content:'';position:absolute;bottom:-80px;left:260px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.025);pointer-events:none}
+.eyebrow{font-size:10.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
+.cover h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:600;line-height:1.12;margin-bottom:12px;position:relative;z-index:1}
+.cover h1 em{font-style:italic;font-weight:400;color:rgba(255,255,255,.5)}
+.cover p{font-size:15px;color:rgba(255,255,255,.55);font-weight:300;line-height:1.75;max-width:520px;position:relative;z-index:1}
+.cover-stats{display:flex;gap:10px;margin-top:40px;position:relative;z-index:1;flex-wrap:wrap}
+.cs{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:13px 18px;text-align:center;min-width:94px}
+.cs .n{font-family:'Playfair Display',serif;font-size:28px;display:block;color:#fff}
+.cs .l{font-size:9.5px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;display:block}
+
+/* ─── NAV ─── */
+.nav-wrap{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--bdr);z-index:200;box-shadow:0 1px 10px rgba(0,0,0,.05)}
+.nav-inner{display:flex;overflow-x:auto;padding:0 40px;scrollbar-width:none}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav-a{font-size:11px;font-weight:500;color:var(--ink3);padding:12px 13px;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;text-decoration:none;cursor:pointer}
+.nav-a:hover{color:var(--ink)}
+.nav-a.on{color:var(--ink);border-color:var(--ink)}
+
+/* ─── MAIN ─── */
+.main{max-width:1120px;margin:0 auto;padding:40px 48px}
+
+/* ─── INTRO ─── */
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:40px;align-items:start}
+.intro-text h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;line-height:1.35;margin-bottom:12px}
+.intro-text p{font-size:13px;line-height:1.85;color:var(--ink2);margin-bottom:10px}
+.stat-col{display:flex;flex-direction:column;gap:9px}
+.sbox{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--rl);padding:16px 18px;display:flex;gap:12px;align-items:center}
+.sn{font-family:'Playfair Display',serif;font-size:32px;color:var(--ink);width:58px;text-align:right;flex-shrink:0}
+.st{font-size:11.5px;color:var(--ink3);line-height:1.5}
+.st strong{display:block;font-size:12.5px;color:var(--ink);font-weight:500;margin-bottom:1px}
+
+/* ─── LEGEND ─── */
+.legend{display:flex;gap:20px;padding:13px 18px;background:var(--surface);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:32px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink2)}
+.leg-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* ─── BADGE (NEW) ─── */
+.new-badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:100px;margin-left:6px;vertical-align:middle}
+
+/* ─── SECTION ─── */
+.section{margin-bottom:56px}
+.sec-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--bdr)}
+.sec-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.sec-hd h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--ink)}
+.sec-count{margin-left:auto;font-size:11px;color:var(--ink3);background:var(--s2);padding:3px 10px;border-radius:100px}
+
+/* ─── GRID ─── */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+@media(max-width:960px){.tgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* ─── CARD ─── */
+.card{background:var(--surface);border:1px solid var(--bdr);border-radius:var(--rl);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .18s,transform .18s}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);transform:translateY(-2px)}
+
+/* screenshot area */
+.cimg{position:relative;height:152px;background:var(--s2);overflow:hidden;flex-shrink:0;border-bottom:1px solid var(--bdr)}
+.cimg img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;opacity:0;transition:opacity .5s}
+.cimg img.vis{opacity:1}
+.cfb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none}
+.cfb-icon{font-size:26px;line-height:1}
+.cfb-name{font-size:10px;font-weight:500;color:var(--ink3);text-align:center;max-width:80%}
+.cov{position:absolute;bottom:0;left:0;right:0;height:32px;background:linear-gradient(transparent,rgba(0,0,0,.1));pointer-events:none}
+
+/* card content */
+.cbody{padding:13px 15px;flex:1;display:flex;flex-direction:column;gap:8px}
+.chead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.cname{font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
+.lic{font-size:9px;font-weight:700;padding:2.5px 7px;border-radius:100px;white-space:nowrap;flex-shrink:0;text-transform:uppercase;letter-spacing:.03em}
+.lic-g{background:var(--gr-bg);color:var(--gr)}
+.lic-f{background:var(--am-bg);color:var(--am)}
+.lic-p{background:var(--rd-bg);color:var(--rd)}
+.cdesc{font-size:11.5px;color:var(--ink2);line-height:1.75;flex:1}
+
+/* card footer */
+.cfoot{padding:9px 15px;border-top:1px solid var(--bdr);background:var(--bg);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cmat{font-size:10px;color:var(--ink3);line-height:1.4;flex:1}
+.cmat strong{color:var(--ink2);font-weight:500}
+.clink{flex-shrink:0;font-size:9.5px;font-weight:600;color:var(--bl);background:var(--bl-bg);padding:4.5px 10px;border-radius:100px;display:flex;align-items:center;gap:3px;text-decoration:none;transition:background .15s}
+.clink:hover{background:#cddaf6}
+.clink svg{width:9px;height:9px;flex-shrink:0}
+
+/* ─── CALLOUT ─── */
+.cbox{border-radius:var(--rl);padding:22px 28px;display:flex;align-items:flex-start;gap:18px;margin-bottom:24px}
+.cbox-icon{font-size:30px;flex-shrink:0;margin-top:2px}
+.cbox h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:5px}
+.cbox p{font-size:12px;line-height:1.75}
+.cb-dark{background:var(--ink);color:#fff}.cb-dark p{color:rgba(255,255,255,.6)}
+.cb-amber{background:#2d1e00;color:#fff}.cb-amber p{color:rgba(255,255,255,.6)}
+.cb-blue{background:#0a2060;color:#fff}.cb-blue p{color:rgba(255,255,255,.6)}
+.cb-teal{background:#053628;color:#fff}.cb-teal p{color:rgba(255,255,255,.6)}
+.cb-purple{background:#1e0a40;color:#fff}.cb-purple p{color:rgba(255,255,255,.6)}
+
+/* ─── REC TABLE ─── */
+.rtbl{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px}
+.rtbl th{text-align:left;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--ink3);padding:9px 13px;border-bottom:1px solid var(--bdr);background:var(--s2)}
+.rtbl td{padding:11px 13px;border-bottom:1px solid var(--bdr);vertical-align:top;color:var(--ink2)}
+.rtbl tr:last-child td{border-bottom:none}
+.rtbl td:first-child{font-weight:500;color:var(--ink)}
+.rtbl tr:hover td{background:var(--s2)}
+.infobox{background:var(--s2);border-radius:var(--rl);padding:22px 26px;border:1px solid var(--bdr)}
+.infobox h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;margin-bottom:9px}
+.infobox p{font-size:12.5px;color:var(--ink2);line-height:1.85}
+
+footer{background:var(--ink);color:rgba(255,255,255,.4);text-align:center;padding:28px;font-size:11px;margin-top:56px;line-height:1.8}
+footer strong{color:rgba(255,255,255,.75)}
+
+/* dot colors */
+.d-gam{background:#6c47e8}.d-eva{background:#0d7a5a}.d-inm{background:#0d6e9a}
+.d-iad{background:#c07a00}.d-sim{background:#c04040}.d-con{background:#1a5ab8}
+.d-mat{background:#0d7a5a}.d-geo{background:#0d8a70}.d-tra{background:#b86a00}
+.d-efi{background:#2a8a40}.d-pro{background:#1a5ab8}.d-mus{background:#9040c0}
+.d-len{background:#c04040}.d-rea{background:#7a4a00}
+.d-dis{background:#e040a0}.d-ges{background:#406080}.d-gen{background:#408040}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <p class="eyebrow">Plataforma Educativa Institucional · Propuesta 2026</p>
+  <h1>Herramientas Digitales<br>para <em>Potenciar</em> el Aprendizaje</h1>
+  <p>Catálogo completo con interfaz visual real, descripción pedagógica, enlace directo y tipo de licencia de cada plataforma. Incluye herramientas adicionales investigadas y recomendadas por categoría.</p>
+  <div class="cover-stats">
+    <div class="cs"><span class="n">101</span><span class="l">Herramientas</span></div>
+    <div class="cs"><span class="n">17</span><span class="l">Áreas</span></div>
+    <div class="cs"><span class="n">40+</span><span class="l">Gratuitas</span></div>
+    <div class="cs"><span class="n">42+</span><span class="l">Freemium</span></div>
+    <div class="cs"><span class="n">14+</span><span class="l">Institucionales</span></div>
+    <div class="cs"><span class="n">25</span><span class="l">Nuevas ★</span></div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <a class="nav-a on" href="#intro">Inicio</a>
+    <a class="nav-a" href="#gen">General ★</a>
+    <a class="nav-a" href="#gam">Gamificación</a>
+    <a class="nav-a" href="#eva">Evaluación</a>
+    <a class="nav-a" href="#inm">Inmersivas</a>
+    <a class="nav-a" href="#iad">IA Docente</a>
+    <a class="nav-a" href="#sim">Simulación</a>
+    <a class="nav-a" href="#con">Conversación IA</a>
+    <a class="nav-a" href="#mat">Matemáticas</a>
+    <a class="nav-a" href="#geo">Geografía</a>
+    <a class="nav-a" href="#tra">Trading & Finanzas</a>
+    <a class="nav-a" href="#efi">Ed. Física</a>
+    <a class="nav-a" href="#pro">Programación</a>
+    <a class="nav-a" href="#mus">Música</a>
+    <a class="nav-a" href="#len">Lengua & Filosofía</a>
+    <a class="nav-a" href="#dis">Diseño ★</a>
+    <a class="nav-a" href="#ges">Gestión del Aula ★</a>
+    <a class="nav-a" href="#rea">IA Mundo Real</a>
+    <a class="nav-a" href="#rec">Recomendaciones</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- INTRO -->
+<section id="intro" style="margin-bottom:48px">
+  <div class="intro-grid">
+    <div class="intro-text">
+      <h2>¿Por qué incorporar estas herramientas?</h2>
+      <p>En 2026 contamos con plataformas que permiten gamificar contenidos, simular laboratorios, practicar idiomas con IA y analizar el rendimiento de cada alumno — muchas de ellas completamente gratuitas. Este catálogo fue enriquecido con <strong>25 nuevas plataformas</strong> investigadas (marcadas con ★) que complementan las originales del documento.</p>
+      <p>Cada tarjeta incluye una <strong>previsualización real del sitio</strong>, descripción pedagógica, tipo de licencia y enlace directo para acceder. Las capturas se cargan en tiempo real desde cada sitio oficial.</p>
+    </div>
+    <div class="stat-col">
+      <div class="sbox"><span class="sn">40+</span><div class="st"><strong>100% Gratuitas</strong>Sin costo — acceso total sin registro obligatorio</div></div>
+      <div class="sbox"><span class="sn">42+</span><div class="st"><strong>Freemium</strong>Versión gratuita robusta + premium opcional</div></div>
+      <div class="sbox"><span class="sn">14+</span><div class="st"><strong>De pago / Institucional</strong>Licencias que justifican su inversión por impacto</div></div>
+      <div class="sbox"><span class="sn">17</span><div class="st"><strong>Áreas curriculares</strong>Desde Matemáticas hasta Ed. Física y Diseño</div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="leg"><div class="leg-d" style="background:var(--gr)"></div><strong style="color:var(--gr);margin-right:4px">Gratis</strong>Sin costo, acceso total</div>
+    <div class="leg"><div class="leg-d" style="background:var(--am)"></div><strong style="color:var(--am);margin-right:4px">Freemium</strong>Gratis con límites; premium opcional</div>
+    <div class="leg"><div class="leg-d" style="background:var(--rd)"></div><strong style="color:var(--rd);margin-right:4px">De Pago</strong>Suscripción o licencia institucional requerida</div>
+    <div class="leg" style="margin-left:auto"><span style="font-size:12px">★ = Herramienta nueva incorporada en esta revisión</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════ SECCIONES ══════════════════ -->
+
+<section id="gen" class="section">
+  <div class="sec-hd"><div class="sec-dot d-gen"></div><h2>Plataformas generales de aprendizaje <span class="new-badge">★ Nueva sección</span></h2><span class="sec-count">3 herramientas</span></div>
+  <div class="cbox cb-teal"><div class="cbox-icon">🌐</div><div><h3>Plataformas que cubren múltiples materias</h3><p>Estas tres plataformas son las más completas del mercado para aprendizaje interdisciplinario. Khan Academy es gratuita y cubre todo el currículo K-12. Brilliant.org gamifica el pensamiento científico con problemas interactivos. IXL ofrece práctica adaptativa en múltiples áreas con análisis profundo de progreso.</p></div></div>
+  <div class="tgrid" id="grid-gen"></div>
+</section>
+
+<section id="gam" class="section">
+  <div class="sec-hd"><div class="sec-dot d-gam"></div><h2>Gamificación del contenido</h2><span class="sec-count">8 herramientas</span></div>
+  <div class="tgrid" id="grid-gam"></div>
+</section>
+
+<section id="eva" class="section">
+  <div class="sec-hd"><div class="sec-dot d-eva"></div><h2>Evaluación y cuestionarios interactivos</h2><span class="sec-count">9 herramientas</span></div>
+  <div class="tgrid" id="grid-eva"></div>
+</section>
+
+<section id="inm" class="section">
+  <div class="sec-hd"><div class="sec-dot d-inm"></div><h2>Herramientas inmersivas</h2><span class="sec-count">5 herramientas</span></div>
+  <div class="tgrid" id="grid-inm"></div>
+</section>
+
+<section id="iad" class="section">
+  <div class="sec-hd"><div class="sec-dot d-iad"></div><h2>IA para el docente — Gamificar reduciendo carga</h2><span class="sec-count">3 herramientas</span></div>
+  <div class="cbox cb-dark"><div class="cbox-icon">🤖</div><div><h3>La IA al servicio del docente</h3><p>Estas plataformas eliminan tareas mecánicas: generar preguntas, diseñar juegos, crear canciones educativas y estructurar aventuras de rol. El tiempo ahorrado puede dedicarse al vínculo pedagógico real con cada alumno.</p></div></div>
+  <div class="tgrid" id="grid-iad"></div>
+</section>
+
+<section id="sim" class="section">
+  <div class="sec-hd"><div class="sec-dot d-sim"></div><h2>Simulación y laboratorio virtual</h2><span class="sec-count">8 herramientas</span></div>
+  <div class="tgrid" id="grid-sim"></div>
+</section>
+
+<section id="con" class="section">
+  <div class="sec-hd"><div class="sec-dot d-con"></div><h2>Conversación e IA de voz</h2><span class="sec-count">7 herramientas</span></div>
+  <div class="tgrid" id="grid-con"></div>
+</section>
+
+<section id="mat" class="section">
+  <div class="sec-hd"><div class="sec-dot d-mat"></div><h2>Matemáticas</h2><span class="sec-count">8 herramientas</span></div>
+  <div class="tgrid" id="grid-mat"></div>
+</section>
+
+<section id="geo" class="section">
+  <div class="sec-hd"><div class="sec-dot d-geo"></div><h2>Geografía</h2><span class="sec-count">5 herramientas</span></div>
+  <div class="tgrid" id="grid-geo"></div>
+</section>
+
+<section id="tra" class="section">
+  <div class="sec-hd"><div class="sec-dot d-tra"></div><h2>Trading y Finanzas personales</h2><span class="sec-count">6 herramientas</span></div>
+  <div class="tgrid" id="grid-tra"></div>
+</section>
+
+<section id="efi" class="section">
+  <div class="sec-hd"><div class="sec-dot d-efi"></div><h2>Educación Física</h2><span class="sec-count">6 herramientas</span></div>
+  <div class="tgrid" id="grid-efi"></div>
+</section>
+
+<section id="pro" class="section">
+  <div class="sec-hd"><div class="sec-dot d-pro"></div><h2>Programación y Robótica</h2><span class="sec-count">17 herramientas</span></div>
+  <div class="cbox cb-blue"><div class="cbox-icon">🎮</div><div><h3>Minecraft Education + Scratch MIT</h3><p><strong>Minecraft Education</strong> — Code Builder (tecla "C") permite programar al robot Agent con MakeCode o Python real. Cursos Pi Craft enseñan matemáticas con vóxeles 3D. <strong>Scratch</strong> (MIT) es el punto de entrada global para la programación por bloques antes de pasar a Python o JavaScript.</p></div></div>
+  <div class="tgrid" id="grid-pro"></div>
+</section>
+
+<section id="mus" class="section">
+  <div class="sec-hd"><div class="sec-dot d-mus"></div><h2>Música</h2><span class="sec-count">9 herramientas</span></div>
+  <div class="tgrid" id="grid-mus"></div>
+</section>
+
+<section id="len" class="section">
+  <div class="sec-hd"><div class="sec-dot d-len"></div><h2>Lengua, Literatura & Filosofía</h2><span class="sec-count">7 herramientas</span></div>
+  <div class="tgrid" id="grid-len"></div>
+</section>
+
+<section id="dis" class="section">
+  <div class="sec-hd"><div class="sec-dot d-dis"></div><h2>Diseño y Creatividad Digital <span class="new-badge">★ Nueva sección</span></h2><span class="sec-count">5 herramientas</span></div>
+  <div class="cbox cb-purple"><div class="cbox-icon">🎨</div><div><h3>Comunicación visual para el siglo XXI</h3><p>La alfabetización visual es tan importante como la textual. Estas plataformas permiten que los alumnos diseñen infografías, libros digitales, presentaciones cinematográficas y cómics educativos. Canva y Adobe Express son gratuitas para estudiantes y docentes de instituciones educativas, siendo las más adoptadas a nivel global.</p></div></div>
+  <div class="tgrid" id="grid-dis"></div>
+</section>
+
+<section id="ges" class="section">
+  <div class="sec-hd"><div class="sec-dot d-ges"></div><h2>Gestión del Aula y Colaboración <span class="new-badge">★ Nueva sección</span></h2><span class="sec-count">7 herramientas</span></div>
+  <div class="cbox" style="background:#1a2840;color:#fff"><div class="cbox-icon">🏫</div><div><h3>El aula como comunidad digital</h3><p>Estas herramientas articulan la comunicación entre docentes, alumnos y familias, y transforman el espacio de trabajo colaborativo. Padlet y Miro son pizarras digitales infinitas; Nearpod y Pear Deck convierten cualquier presentación en una lección interactiva en tiempo real; Flip permite debates asíncronos por video.</p></div></div>
+  <div class="tgrid" id="grid-ges"></div>
+</section>
+
+<section id="rea" class="section">
+  <div class="sec-hd"><div class="sec-dot d-rea"></div><h2>IA en el Mundo Real — Fuera de la Pantalla</h2><span class="sec-count">3 herramientas</span></div>
+  <div class="cbox cb-amber"><div class="cbox-icon">🌍</div><div><h3>Actividades en patios, museos y entornos urbanos</h3><p>Estas plataformas usan GPS, balizas Bluetooth y Realidad Aumentada para convertir el espacio físico del colegio, museos o la ciudad en un entorno de aprendizaje inmersivo. La IA dispara contenidos cuando el alumno llega a un punto físico específico.</p></div></div>
+  <div class="tgrid" id="grid-rea"></div>
+</section>
+
+<!-- RECOMENDACIONES -->
+<section id="rec" class="section">
+  <div class="sec-hd"><div class="sec-dot" style="background:var(--ink)"></div><h2>Recomendaciones para la implementación</h2></div>
+  <p style="font-size:13px;color:var(--ink2);line-height:1.85;margin-bottom:24px;max-width:700px">La incorporación de herramientas digitales debe ser gradual, estratégica y orientada por criterios pedagógicos. Se recomienda avanzar por fases según nivel de inversión y complejidad de integración en la plataforma institucional.</p>
+  <table class="rtbl">
+    <thead><tr><th>Herramienta</th><th>Área</th><th>Licencia</th><th>Por qué priorizarla</th></tr></thead>
+    <tbody>
+      <tr><td>PhET Interactive Simulations</td><td>Ciencias</td><td><span class="lic lic-g">Gratis</span></td><td>Laboratorio virtual respaldado por investigación científica. Mayor impacto gratuito en STEM a nivel global.</td></tr>
+      <tr><td>Khan Academy</td><td>General</td><td><span class="lic lic-g">Gratis</span></td><td>Cubre todo el currículo K-12 de forma gratuita. La plataforma de aprendizaje más usada del mundo por su calidad y amplitud.</td></tr>
+      <tr><td>GeoGebra</td><td>Matemáticas</td><td><span class="lic lic-g">Gratis</span></td><td>Estándar internacional para visualización matemática dinámica. Insustituible para geometría y álgebra visual.</td></tr>
+      <tr><td>Google Earth Education</td><td>Geografía</td><td><span class="lic lic-g">Gratis</span></td><td>Reemplaza cualquier atlas impreso. Exploración autónoma del planeta en 3D real.</td></tr>
+      <tr><td>Canva for Education</td><td>Diseño</td><td><span class="lic lic-g">Gratis</span></td><td>Gratuita para colegios. La herramienta de diseño visual más adoptada en educación secundaria a nivel mundial.</td></tr>
+      <tr><td>Kahoot! + Quizizz</td><td>Evaluación</td><td><span class="lic lic-f">Freemium</span></td><td>La dupla cubre evaluación bajo presión de tiempo y a ritmo propio. Feedback inmediato al docente sin costo.</td></tr>
+      <tr><td>Edpuzzle</td><td>Evaluación</td><td><span class="lic lic-f">Freemium</span></td><td>Convierte cualquier video de YouTube o Khan Academy en evaluación interactiva. Ideal para el modelo de aula invertida.</td></tr>
+      <tr><td>ClassDojo</td><td>Gestión del aula</td><td><span class="lic lic-g">Gratis</span></td><td>Conecta docentes, alumnos y familias en tiempo real. Refuerzo positivo del comportamiento con seguimiento de portafolio.</td></tr>
+      <tr><td>CommonLit</td><td>Lengua</td><td><span class="lic lic-g">Gratis</span></td><td>Biblioteca con comprensión lectora integrada en español e inglés. 100% gratuita para escuelas públicas.</td></tr>
+      <tr><td>EduBlocks + Scratch + Code.org</td><td>Programación</td><td><span class="lic lic-g">Gratis</span></td><td>El trío perfecto para cubrir toda la progresión: Scratch (inicial) → EduBlocks (transición) → Code.org Python Lab (avanzado).</td></tr>
+      <tr><td>Minecraft Education</td><td>Programación / Matemáticas</td><td><span class="lic lic-p">De Pago</span></td><td>El entorno más motivador para adolescentes. Cubre Python, geometría 3D y proyectos interdisciplinarios dentro de un universo que los alumnos ya conocen.</td></tr>
+      <tr><td>Google NotebookLM</td><td>Estudio autónomo</td><td><span class="lic lic-g">Gratis</span></td><td>Convierte cualquier material en podcast interactivo. Revoluciona el repaso autónomo y el aprendizaje "manos libres".</td></tr>
+      <tr><td>Nearpod</td><td>Gestión del aula</td><td><span class="lic lic-f">Freemium</span></td><td>Transforma cualquier presentación en una clase interactiva con polls, VR y actividades en tiempo real. Compatible con Google Slides y PowerPoint.</td></tr>
+      <tr><td>Brilliant.org</td><td>STEM</td><td><span class="lic lic-f">Freemium</span></td><td>La mejor plataforma para desarrollar pensamiento científico profundo a través de problemas interactivos. Pensada para alumnos que quieren ir más allá del currículo.</td></tr>
+      <tr><td>Labster</td><td>Ciencias</td><td><span class="lic lic-p">De Pago</span></td><td>La plataforma premium de laboratorios 3D. Recomendada cuando el colegio priorice STEM avanzado con presupuesto institucional.</td></tr>
+    </tbody>
+  </table>
+  <div class="infobox">
+    <h3>Criterios para la selección final</h3>
+    <p>Al evaluar qué herramientas incorporar, se recomienda considerar en orden: <strong>1. Alineación curricular</strong> — ¿refuerza los contenidos del programa oficial? · <strong>2. Accesibilidad tecnológica</strong> — ¿funciona en los dispositivos disponibles? ¿requiere conexión estable? · <strong>3. Privacidad de datos</strong> — ¿cumple normativas de protección para menores (COPPA, GDPR, Ley 25.326)? · <strong>4. Curva de adopción docente</strong> — ¿puede aprenderse sin soporte técnico intensivo? · <strong>5. Escalabilidad</strong> — ¿el plan gratuito es suficiente para comenzar o requiere inversión inmediata?</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>Plataforma Educativa Institucional</strong> — Propuesta de Herramientas Digitales 2026<br>
+  Las previsualizaciones se cargan en tiempo real desde cada sitio web oficial · ★ Herramientas nuevas incorporadas en esta revisión · Precios referenciales sujetos a cambios
+</footer>
+
+<script>
+// ─── SCREENSHOT SERVICES ───────────────────────────────────────────
+// Primary: WordPress mshots (free, reliable for popular sites)
+// Fallback: thum.io (different CDN)
+function mshots(url) {
+  return 'https://s.wordpress.com/mshots/v1/' + encodeURIComponent(url) + '?w=640&h=400';
+}
+function thum(url) {
+  return 'https://image.thum.io/get/width/640/crop/400/noanimate/' + url;
+}
+
+// ─── DATA ──────────────────────────────────────────────────────────
+const T = {
+
+gen:[
+  {n:'Khan Academy',l:'g',url:'https://www.khanacademy.org',new:1,
+   d:'La plataforma de aprendizaje gratuita más usada del mundo. Cubre todo el currículo K-12 con videos, ejercicios interactivos y paneles de progreso para el docente. En 2026 integra Khanmigo, un tutor socrático de IA que guía al alumno sin darle las respuestas directamente.',
+   m:'Matemáticas, Ciencias, Historia, Economía, Computación — todos los niveles'},
+  {n:'Brilliant.org',l:'f',url:'https://brilliant.org',new:1,
+   d:'La plataforma definitiva para desarrollar pensamiento científico profundo a través de problemas interactivos y visualizaciones. Sus cursos de Matemáticas, Física, Lógica y Ciencias de Datos están diseñados para que el alumno descubra los conceptos en lugar de memorizarlos. Prueba gratuita; planes desde $15 USD/mes.',
+   m:'Matemáticas, Física, Lógica, Ciencias de Datos, Computación'},
+  {n:'IXL Learning',l:'f',url:'https://www.ixl.com',new:1,
+   d:'Sistema de práctica adaptativa con más de 9,000 habilidades para Matemáticas, Lengua, Ciencias, Ciencias Sociales e Inglés. La IA ajusta la dificultad en tiempo real y genera análisis detallado del nivel de cada alumno con diagnóstico por competencia. Plan básico desde $20 USD/mes.',
+   m:'Matemáticas, Lengua, Ciencias, Ciencias Sociales, Inglés (adaptativo)'},
+],
+
+gam:[
+  {n:'Gimkit',l:'f',url:'https://www.gimkit.com',
+   d:'Los alumnos responden preguntas en vivo para ganar dinero virtual que invierten en una tienda del juego comprando multiplicadores, escudos o atacando a sus compañeros. Su mecánica estratégica engancha por completo a los adolescentes. Múltiples modos cooperativos y competitivos.',
+   m:'Matemáticas, Ciencias, Inglés — Plan Pro ~$60 USD/año'},
+  {n:'Blooket',l:'f',url:'https://www.blooket.com',
+   d:'Cuestionarios integrados en minijuegos de estrategia individuales: defender una torre, gestionar un café, explorar laberintos. Es asincrónico, equilibrando la competencia entre alumnos rápidos y lentos. La versión gratuita es muy generosa. Plan Plus desde $3–5 USD/mes.',
+   m:'Lengua, Historia, Geografía'},
+  {n:'Genially',l:'f',url:'https://genially.com',
+   d:'Diseña infografías, mapas y Escape Rooms virtuales con mecánicas de arrastrar y soltar. Crea narrativas visuales complejas donde el alumno aprende investigando. Creaciones ilimitadas gratis (con marca de agua). Planes educativos desde $1.25 USD/mes.',
+   m:'Historia, Biología, Filosofía'},
+  {n:'Wordwall',l:'f',url:'https://wordwall.net',new:1,
+   d:'Crea actividades interactivas en menos de un minuto: ruletas, cuestionarios, crucigramas, anagramas, tarjetas de memoria y muchas actividades más. El mismo contenido se transforma automáticamente en diferentes tipos de juego con un solo clic. Muy intuitiva para docentes. Plan gratuito con 5 actividades.',
+   m:'Cualquier materia — repaso de vocabulario, conceptos y definiciones'},
+  {n:'Quizizz',l:'f',url:'https://quizizz.com',
+   d:'Cuestionarios donde cada estudiante avanza a su propio ritmo ganando power-ups al acertar. La IA integrada crea escenarios con drag & drop de conceptos. Sin la presión grupal de la velocidad de respuesta.',
+   m:'Matemáticas, Física, Química'},
+  {n:'Deck.Toys',l:'f',url:'https://deck.toys',
+   d:'Diseña mapas de rutas o parques temáticos donde cada parada es una lección o minijuego. Ideal para aprendizaje diferenciado y autónomo. Hasta 3 aulas virtuales activas gratis. Planes desde $15 USD/mes.',
+   m:'Programación, Matemáticas, Lógica'},
+  {n:'Kahoot!',l:'f',url:'https://kahoot.com',
+   d:'La plataforma más conocida para cuestionarios en tiempo real. En 2026 integra IA que genera preguntas automáticamente desde un texto o enlace. El "Accuracy Mode" prioriza reflexión sobre velocidad. Hasta 10 participantes gratis.',
+   m:'Evaluación diagnóstica, repasos, cualquier materia'},
+  {n:'ClassMana / Teach-Quest',l:'g',url:'https://classmana.com',
+   d:'Permiten crear avatares, organizar a los alumnos en gremios y asignar puntos de experiencia según comportamiento y tareas. Transforma la gestión del aula en un RPG de aventura completo con misiones y recompensas diarias.',
+   m:'Tutorías, proyectos interdisciplinarios, gestión de clase'},
+],
+
+eva:[
+  {n:'Edpuzzle',l:'f',url:'https://edpuzzle.com',new:1,
+   d:'Transforma cualquier video de YouTube, Khan Academy o carga propia en una lección evaluable: el alumno no puede saltear el video y debe responder preguntas incrustadas para avanzar. La IA genera preguntas automáticamente en 2026. Imprescindible para el modelo de aula invertida. Plan básico muy generoso gratis.',
+   m:'Cualquier materia con video — Ciencias, Historia, Geografía, Matemáticas'},
+  {n:'Quizlet',l:'f',url:'https://quizlet.com',new:1,
+   d:'El estándar global para flashcards y estudio colaborativo. Los alumnos crean o importan sets de tarjetas y los practican con Flashcards, Learn, Write, Spell, Test y Match (competencia cronometrada). La IA de Quizlet genera preguntas desde cualquier texto ingresado. Muy popular en secundaria.',
+   m:'Vocabulario, conceptos, definiciones — cualquier materia'},
+  {n:'Laxu AI',l:'f',url:'https://laxu.ai',
+   d:'Transforma cualquier PDF, imagen o audio en una batería de preguntas y flashcards automáticamente. Incluye algoritmos de repetición espaciada y un tutor de IA integrado que guía al alumno de forma autónoma. ~$5 USD/mes el plan pago.',
+   m:'Biología, Historia, Geografía — contenido teórico extenso'},
+  {n:'Socrative',l:'f',url:'https://www.socrative.com',
+   d:'La "Carrera espacial" permite que equipos compitan llevando su nave a la meta respondiendo preguntas en tiempo real. Muy eficaz para exit tickets al cierre de clase. Hasta 50 alumnos gratis; Plan Pro ~$10 USD/mes.',
+   m:'Repasos generales, Exit tickets de comprensión'},
+  {n:'Gradescope',l:'f',url:'https://www.gradescope.com',
+   d:'El alumno sube una fotografía de su examen escrito a mano y la IA agrupa respuestas similares. El docente corrige todo el grupo bajo el mismo criterio en una fracción del tiempo. Única plataforma que permite corregir lógica matemática paso a paso.',
+   m:'Matemáticas, Física, Química'},
+  {n:'Formative / GoFormative',l:'f',url:'https://goformative.com',
+   d:'Sube cualquier PDF y transfórmalo en un lienzo interactivo donde los alumnos responden dibujando, escribiendo, arrastrando o grabando voz. El docente ve lo que escribe cada alumno en tiempo real. Planes Silver/Gold ~$15 USD/mes con detección de plagio por IA.',
+   m:'Lengua y Literatura, corrección de redacción en vivo'},
+  {n:'Plickers',l:'g',url:'https://get.plickers.com',
+   d:'Diseñada para entornos con baja conectividad: cada alumno responde levantando una tarjeta de papel con código de barras único. El docente escanea el aula con la cámara del móvil y registra todas las respuestas al instante. Sin dispositivos para los alumnos. 100% gratuita.',
+   m:'Cualquier área — instituciones con limitaciones tecnológicas'},
+  {n:'Kahoot! (evaluación)',l:'f',url:'https://kahoot.com',
+   d:'El asistente de IA genera preguntas automáticamente desde un texto o enlace. El "Accuracy Mode" prioriza comprensión sobre velocidad. El nuevo resolvedor paso a paso para Matemáticas ayuda a los alumnos a entender sus errores inmediatamente.',
+   m:'Matemáticas, Ciencias — diagnósticos y repasos'},
+  {n:'Quizizz (evaluación)',l:'f',url:'https://quizizz.com',
+   d:'Al no depender de la velocidad grupal, es ideal para evaluaciones de problemas complejos sin presión. Avatares, memes y power-ups mantienen el compromiso. Herramientas avanzadas de análisis en planes escolares para seguimiento individual.',
+   m:'Matemáticas, Física, Química — problemas complejos'},
+],
+
+inm:[
+  {n:'Genially — Escape Rooms',l:'f',url:'https://genially.com',
+   d:'Breakouts Digitales y Escape Rooms donde los alumnos exploran habitaciones virtuales, arrastran objetos, resuelven acertijos y encuentran códigos ocultos para pasar de pantalla. El alumno aprende investigando dentro de una narrativa inmersiva.',
+   m:'Historia, Geografía, Biología, Filosofía'},
+  {n:'Labster',l:'p',url:'https://www.labster.com',
+   d:'Laboratorios 3D inmersivos donde los alumnos resuelven misterios científicos: secuencian ADN, calibran reactores o aplican ciencia forense. Gráficos de nivel universitario con narrativa gamificada. Licencia institucional por suscripción escolar.',
+   m:'Biología, Química, Física — experimentos costosos o peligrosos'},
+  {n:'H5P',l:'g',url:'https://h5p.org',
+   d:'Más de 40 tipos de contenidos HTML5 interactivos. Su función estrella es el Video Interactivo: pausa automáticamente en momentos clave para que el alumno resuelva una pregunta antes de continuar. Integra con Moodle y WordPress. La versión cloud con LTI/LMS es de pago.',
+   m:'Lengua, Ciencias Sociales, Historia — videos evaluables'},
+  {n:'BioDigital Human',l:'f',url:'https://www.biodigital.com',
+   d:'Modelo anatómico 3D interactivo del cuerpo humano completo. Permite rotar, hacer disecciones virtuales, añadir capas de sistemas corporales y ver simulaciones de enfermedades en tiempo real. Cuentas académicas avanzadas con suscripción institucional.',
+   m:'Biología, Anatomía, Salud'},
+  {n:'Google Earth Education',l:'g',url:'https://earth.google.com/web/',
+   d:'Itinerarios interactivos Voyager con mapeo 3D: viajes inmersivos midiendo distancias y analizando capas topográficas, históricas o climáticas. Ideal para exploración autónoma del espacio geográfico global. Completamente gratuita.',
+   m:'Geografía, Historia, Ciencias de la Tierra'},
+],
+
+iad:[
+  {n:'MagicSchool AI',l:'f',url:'https://www.magicschool.ai',
+   d:'Plataforma de IA educativa líder en 2026. Transforma contenidos en juegos y dinámicas en segundos. Su "Educational Song Generator" crea canciones curriculares con letra, voz y portada en menos de un minuto. Generadores de cuestionarios alineados a estándares académicos del docente.',
+   m:'Matemáticas, Historia, Ciencias, Lengua'},
+  {n:'Eduaide.Ai',l:'f',url:'https://www.eduaide.ai',
+   d:'Módulo exclusivo de "Juegos Educativos": diseña dinámicas listas para usar (tres en línea con preguntas académicas, juegos de rol, rompehielos físicos). El docente ingresa el tema y la IA redacta reglas, objetivos y preguntas completas. Soporta más de 15 lenguas.',
+   m:'Ciencias, Educación Física, Idiomas'},
+  {n:'Kleverplay',l:'p',url:'https://kleverplay.com',
+   d:'Crea experiencias de realidad virtual 360° y aventuras inmersivas sin ningún conocimiento de programación. La IA estructura pistas y retos automáticamente a partir de un texto ingresado por el docente. Plataforma emergente con pruebas piloto para instituciones.',
+   m:'Geografía, Biología, Historia, Arte'},
+],
+
+sim:[
+  {n:'PhET Interactive Simulations',l:'g',url:'https://phet.colorado.edu',
+   d:'Simulaciones interactivas basadas en investigación científica. Interfaz tipo videojuego: el alumno modifica la gravedad, construye átomos o cambia la concentración de una disolución. 100% gratis y código abierto. Recurso indispensable a nivel global.',
+   m:'Física, Química, Biología, Matemáticas, Ciencias de la Tierra'},
+  {n:'LabXchange (Harvard)',l:'g',url:'https://www.labxchange.org',
+   d:'Plataforma de la Universidad de Harvard con biblioteca de simulaciones de procedimientos biológicos reales: electroforesis, siembra de bacterias, biotecnología. Disponible vía web o descargable. Completamente gratuita.',
+   m:'Biología celular, Biotecnología, Genética molecular'},
+  {n:'ExploreLearning Gizmos',l:'p',url:'https://www.explorelearning.com',
+   d:'Más de 550 simulaciones interactivas donde los alumnos manipulan variables y analizan datos con gráficos y tablas para responder investigaciones estructuradas. Pruebas gratuitas para profesores. Suscripciones escolares.',
+   m:'Matemáticas, Física, Biología, Química (grados 3–12)'},
+  {n:'LabsLand',l:'p',url:'https://labsland.com',
+   d:'Conecta al alumno con laboratorios físicos reales en universidades del mundo. El alumno programa hardware auténtico (Arduino, STM32) y observa mediante cámaras en vivo cómo actúa el hardware. No son simulaciones: son experimentos físicos reales a distancia.',
+   m:'Robótica, Sistemas Embebidos, Programación física, IoT'},
+  {n:'Cisco Packet Tracer',l:'g',url:'https://www.netacad.com',
+   d:'Simulador de redes de datos: diseña, configura y soluciona problemas de topologías con routers, switches y servidores simulados. Gratuito para estudiantes de la Cisco Networking Academy. Ideal para introducir redes de computación desde secundaria.',
+   m:'Informática, Telecomunicaciones, Tecnología de la Información'},
+  {n:'Educaplus',l:'g',url:'https://www.educaplus.org',
+   d:'Portal con cientos de applets para demostrar principios científicos básicos mediante variables ajustables con deslizadores. Sin instalaciones complejas, directo desde el navegador. Cálculos de fricción, equilibrios térmicos y muchos más.',
+   m:'Física básica, Química elemental'},
+  {n:'VRLab Academy / CloudLabs',l:'p',url:'https://vrlab.academy',
+   d:'Suites con cientos de simulaciones gamificadas adaptadas a planes de estudio. Los alumnos exploran el contexto del problema, experimentan y reciben evaluación automática e inmediata. VRLab es compatible con Realidad Virtual Meta Quest.',
+   m:'Química, Física, Biología general'},
+  {n:'Tinkercad — Circuits',l:'g',url:'https://www.tinkercad.com',
+   d:'Su sección Circuits permite diseñar circuitos electrónicos virtuales con placas Arduino, sensores y LEDs. Programación visual por bloques de colores. Simula comportamiento exacto de corriente y voltajes sin riesgo de quemar componentes reales. 100% gratuito.',
+   m:'Electrónica, Ingeniería, Microcontroladores'},
+],
+
+con:[
+  {n:'Google NotebookLM',l:'g',url:'https://notebooklm.google.com',
+   d:'El alumno sube apuntes, PDFs, enlaces o videos y la herramienta genera un "Audio Overview": dos voces de IA con tono humano debaten y resumen el contenido en formato podcast. Modo interactivo permite conversar por voz con los presentadores en tiempo real.',
+   m:'Estudio autónomo, repaso "manos libres", análisis de múltiples documentos'},
+  {n:'ElevenLabs / GenFM',l:'f',url:'https://elevenlabs.io',
+   d:'Líder en síntesis de voz con IA. GenFM convierte cualquier documento o enlace en un programa de radio de altísima calidad sonora con personalización de tono y voces. Ideal para crear audiolibros educativos. Planes desde $5 USD/mes.',
+   m:'Accesibilidad, Audiolibros educativos, dificultades visuales'},
+  {n:'ChatGPT — Advanced Voice',l:'f',url:'https://chat.openai.com',
+   d:'La experiencia conversacional por voz más fluida: latencia mínima, puede ser interrumpida a mitad de frase, imita tonos de voz. El alumno puede pedirle que actúe como entrenador de debate de Filosofía o que haga preguntas cada dos minutos mientras camina. Plan Plus: $20 USD/mes.',
+   m:'Filosofía, Lengua, Historia, debates, estudio autónomo manos libres'},
+  {n:'TalkPal AI',l:'f',url:'https://talkpal.ai',
+   d:'"Modo Llamada" que simula conversaciones telefónicas con IA. Propone situaciones de la vida real (perdidos en un aeropuerto, negociación). Escucha la pronunciación e interrumpe con amabilidad dando feedback de gramática y fluidez en tiempo real.',
+   m:'Inglés, Lenguas Extranjeras, pérdida del miedo a hablar'},
+  {n:'Langua',l:'f',url:'https://langua.app',
+   d:'Tutores virtuales con acentos marcados y muy humanos. Propone debates, juegos de rol y conversaciones adaptadas a los intereses del alumno. Si el alumno se queda sin ideas, el botón de ayuda sugiere qué responder. Modo "Call" completamente manos libres.',
+   m:'Inglés, Francés, Español, idiomas — fluidez conversacional'},
+  {n:'Pi, your personal AI',l:'g',url:'https://pi.ai',
+   d:'IA altamente empática y conversacional. En modo voz entabla conversaciones continuas: escucha, sugiere actividades de estudio, lee fragmentos literarios y hace preguntas de comprensión. Tono excepcionalmente cálido. Ideal como "compañero de estudio". 100% gratuita.',
+   m:'Acompañamiento, brainstorming, Literatura, Filosofía'},
+  {n:'NaturalReader',l:'f',url:'https://www.naturalreaders.com',
+   d:'Lector texto a voz con voces neuronales de alta fidelidad. Permite subir cualquier libro, PDF o página web para escucharlo de forma fluida con velocidades ajustables. Especialmente valioso para dislexia y dificultades visuales.',
+   m:'Textos largos, Literatura, dislexia, dificultades de lectura'},
+],
+
+mat:[
+  {n:'GeoGebra',l:'g',url:'https://www.geogebra.org',
+   d:'Software de matemáticas dinámicas que une geometría, álgebra, hojas de cálculo, gráficos, estadística y cálculo en una sola herramienta. Los alumnos mueven puntos y ven cambiar las ecuaciones en tiempo real. Estándar global. 100% gratuito.',
+   m:'Geometría, Álgebra, Funciones, Cálculo visual'},
+  {n:'Prodigy Math',l:'f',url:'https://www.prodigygame.com',new:1,
+   d:'RPG de fantasía donde los alumnos avanzan en el mundo resolviendo problemas de Matemáticas adaptados a su nivel real. La IA ajusta la dificultad automáticamente según el rendimiento de cada alumno. El docente ve reportes detallados por alumno y estándar. La plataforma básica es gratuita.',
+   m:'Matemáticas K-8 — fracciones, álgebra temprana, aritmética gamificada'},
+  {n:'Wolfram Alpha',l:'f',url:'https://www.wolframalpha.com',new:1,
+   d:'Motor de conocimiento computacional que resuelve cualquier problema matemático, científico o estadístico mostrando el proceso completo paso a paso con visualizaciones. Va mucho más allá de una calculadora: entiende lenguaje natural. Muy útil para verificar procedimientos avanzados.',
+   m:'Matemáticas avanzadas, Física, Química, Estadística, cualquier STEM'},
+  {n:'Mathigon / Polypad',l:'g',url:'https://mathigon.org',
+   d:'"El patio de juegos matemático": bloques de fracciones, fichas de álgebra, polígonos 3D y balanzas interactivas de forma táctil y visual. Los alumnos "despliegan" figuras en 3D para entender áreas y volúmenes intuitivamente. Sin registro obligatorio.',
+   m:'Geometría, Fracciones, Probabilidad, Álgebra temprana'},
+  {n:'Desmos',l:'g',url:'https://www.desmos.com',
+   d:'Calculadora gráfica online ultra rápida. Los alumnos trazan funciones y usan deslizadores para ver cómo cambian parábolas y ondas trigonométricas en tiempo real. Estándar de la industria educativa en matemáticas interactivas. 100% gratuita.',
+   m:'Funciones, Gráficos, Estadística, Trigonometría'},
+  {n:'Photomath',l:'f',url:'https://photomath.com',
+   d:'El alumno enfoca con la cámara del móvil un problema escrito a mano o impreso. La app lo escanea y desglosa la solución paso a paso con animaciones que explican el porqué de cada movimiento. Resolución básica gratuita.',
+   m:'Álgebra, Aritmética, verificación autónoma de tareas'},
+  {n:'Symbolab',l:'f',url:'https://www.symbolab.com',
+   d:'Calculadora algebraica con IA que ofrece soluciones detalladas paso a paso con explicaciones matemáticas formales. Excelente para verificar procedimientos largos. El resultado es gratuito; el desglose de pasos requiere suscripción.',
+   m:'Ecuaciones avanzadas, Integrales, Derivadas, Matrices'},
+  {n:'Mathos AI / MathGPTPro',l:'f',url:'https://www.mathgptpro.com',
+   d:'IA socrática de alta precisión que resuelve desde álgebra básica hasta cálculo avanzado con explicaciones paso a paso, adaptando el lenguaje al nivel del estudiante. Consultas gratuitas diarias con límite; planes premium para acceso ilimitado.',
+   m:'Resolución de problemas complejos, Trigonometría, Cálculo'},
+],
+
+geo:[
+  {n:'Google Earth Education',l:'g',url:'https://earth.google.com/web/',
+   d:'Expediciones virtuales Voyager con imágenes satelitales 3D. Los alumnos miden distancias, analizan capas climáticas, topográficas y demográficas, y exploran el planeta con Street View. Herramienta referente para geografía física y humana. 100% gratuita.',
+   m:'Geografía física, humana y climática'},
+  {n:'Seterra',l:'f',url:'https://www.seterra.com',
+   d:'Estándar mundial de cuestionarios cartográficos: cientos de ejercicios con mapas mudos donde los alumnos localizan países, provincias, capitales, banderas, ríos y montañas con drag & drop o clic rápido. Acceso web gratuito; premium para mapas avanzados.',
+   m:'Geografía política y física — localización'},
+  {n:'GeoGuessr',l:'f',url:'https://www.geoguessr.com',
+   d:'Muy popular entre adolescentes: el alumno aparece en un punto aleatorio del planeta y debe deducir dónde está buscando pistas visuales (vegetación, señales, idioma, arquitectura) para marcar la ubicación en el mapa. Desarrolla pensamiento lógico inductivo real.',
+   m:'Geografía cultural, humana, climática y pensamiento lógico'},
+  {n:'ArcGIS StoryMaps',l:'f',url:'https://storymaps.arcgis.com',
+   d:'Herramienta profesional GIS para educación. Los alumnos crean presentaciones dinámicas combinando mapas interactivos propios con textos, fotos, videos e historias (rutas de migración, desastres naturales, geografía urbana). Introduce al trabajo con sistemas cartográficos profesionales.',
+   m:'Proyectos de investigación, geografía humana, introducción a GIS'},
+  {n:'Educaplay',l:'f',url:'https://www.educaplay.com',
+   d:'Mapas interactivos y puzzles geográficos con generador asistido por IA que crea actividades temáticas en segundos. El alumno ubica elementos arrastrando o haciendo clic. Amplia comunidad de actividades ya creadas para usar directamente en clase.',
+   m:'Repasos de localización, geografía física básica'},
+],
+
+tra:[
+  {n:'TradingView',l:'f',url:'https://www.tradingview.com',
+   d:'La plataforma de análisis gráfico más usada en el mundo financiero profesional. Su función Paper Trading permite operar en mercados reales de acciones, divisas y crypto con dinero virtual aplicando indicadores técnicos reales. Simulador básico gratuito.',
+   m:'Trading, análisis de mercados, inversiones de renta variable'},
+  {n:'PersonalFinanceLab',l:'p',url:'https://www.personalfinancelab.com',
+   d:'Diseñada para escuelas secundarias. Combina Stock Market Game y Budgeting Game: los alumnos simulan vida independiente, gestionan salarios, pagan facturas, usan tarjetas de crédito y construyen un fondo de emergencia. ~$10 USD por alumno.',
+   m:'Finanzas personales, presupuesto familiar, economía, bolsa'},
+  {n:'Payback',l:'g',url:'https://www.nefe.org',
+   d:'Simulador galardonado donde el alumno ingresa a la universidad: elige carrera según costo de matrícula, decide alojamiento, horas de trabajo y tipo de préstamos. El objetivo es graduarse equilibrando éxito académico y deuda acumulada.',
+   m:'Planificación financiera a largo plazo, préstamos estudiantiles'},
+  {n:'Shady Sam',l:'g',url:'https://www.icanfinance.com',
+   d:'El alumno juega como prestamista de dudosa reputación maximizando beneficios con intereses y cargos ocultos. Esta mecánica inversa hace que el adolescente comprenda tasas de interés, deudas revolving y los peligros de los préstamos rápidos.',
+   m:'Educación al consumidor, tasas de interés, crédito'},
+  {n:'Investopedia Simulator',l:'g',url:'https://www.investopedia.com/simulator/',
+   d:'Simulador integrado en la mayor enciclopedia financiera del mundo. Permite crear competencias de inversión en el aula, comprar y vender acciones reales con capital virtual de $100,000 y seguir rankings de compañeros. Completamente gratuito.',
+   m:'Bolsa de valores, portafolios de inversión, macroeconomía'},
+  {n:'Spent',l:'g',url:'http://playspent.org',
+   d:'El alumno empieza el mes con $1,000 y debe sobrevivir tomando decisiones difíciles de familias de bajos ingresos. El juego termina si el balance llega a cero. Genera empatía profunda y conciencia financiera real.',
+   m:'Economía social, presupuesto extremo, conciencia financiera'},
+],
+
+efi:[
+  {n:'Zombies, Run!',l:'f',url:'https://zombiesrungame.com',
+   d:'Convierte correr o caminar en una misión apocalíptica con audionovela interactiva. El alumno debe acelerar el paso cuando los zombis se acercan. Recolecta suministros virtuales para reconstruir su base. Las primeras misiones son gratuitas.',
+   m:'Resistencia aeróbica, atletismo, entrenamiento de intervalos'},
+  {n:'FitCraft',l:'p',url:'https://fitcraft.app',
+   d:'Gamifica el acondicionamiento físico asociando movimientos reales a la progresión de un avatar digital. Los alumnos completan misiones físicas para obtener recompensas virtuales. Requiere licencias escolares para seguimiento integrado del grupo.',
+   m:'Fuerza, flexibilidad, hábitos saludables en casa o en la escuela'},
+  {n:'Actionbound',l:'f',url:'https://actionbound.com',
+   d:'Diseña búsquedas del tesoro interactivas en el patio del colegio, parques o entornos urbanos. Los alumnos se mueven físicamente con GPS, escanean códigos QR y superan desafíos de movimiento para ganar puntos.',
+   m:'Orientación espacial, velocidad, trabajo en equipo, actividad al aire libre'},
+  {n:'Sworkit',l:'f',url:'https://sworkit.com',
+   d:'Circuitos de ejercicios personalizados (fuerza, cardio, yoga) con videos de entrenadores reales demostrando técnica correcta. El alumno realiza rutinas completas de forma autónoma. Versión "Sworkit Youth" diseñada para escuelas.',
+   m:'Técnica de ejercicio, autonomía motriz, fuerza y flexibilidad'},
+  {n:'Leverade',l:'f',url:'https://leverade.com',
+   d:'Organiza ligas, torneos y campeonatos escolares. Crea fixtures, registra estadísticas de cada partido (goles, faltas, asistencias), arma clasificaciones y comparte resultados digitalmente con toda la comunidad.',
+   m:'Deportes colectivos, gestión deportiva, estadística, Fair Play'},
+  {n:"Coach's Eye",l:'p',url:'https://coachseye.com',
+   d:'Graba movimientos técnicos y analízalos en cámara lenta. El alumno traza líneas en pantalla para evaluar ángulos corporales y postura. Invaluable para tiros de baloncesto, saques de voleibol o técnica atlética. Pago por descarga o suscripción.',
+   m:'Biomecánica, análisis técnico del movimiento, autoevaluación'},
+],
+
+pro:[
+  {n:'Scratch (MIT)',l:'g',url:'https://scratch.mit.edu',new:1,
+   d:'La plataforma de programación por bloques creada por el MIT y la más usada del mundo para iniciación. Los alumnos crean juegos, animaciones e historias interactivas arrastrando bloques de colores. Es la puerta de entrada universal a la programación. 100% gratuita y en español.',
+   m:'Introducción a la programación — 8 a 14 años, sin conocimiento previo'},
+  {n:'EduBlocks',l:'g',url:'https://edublocks.org',
+   d:'Puente entre Scratch y Python: los bloques contienen código real de Python 3. Con un clic, la interfaz se gira y revela el archivo de texto en Python puro, enseñando sangría y sintaxis de forma natural. 100% gratuito y código abierto.',
+   m:'Transición directa de bloques a texto Python 3'},
+  {n:'MIT App Inventor',l:'g',url:'https://appinventor.mit.edu',new:1,
+   d:'Plataforma del MIT para crear aplicaciones móviles reales para Android mediante programación por bloques. Los alumnos diseñan la interfaz de la app y programan su lógica, y pueden instalar y usar la app en su teléfono real. 100% gratuita. Introduce conceptos de desarrollo mobile sin código.',
+   m:'Desarrollo de apps móviles, lógica de programación, proyectos reales'},
+  {n:'CodeCombat',l:'f',url:'https://codecombat.com',
+   d:'Videojuego RPG donde el alumno controla su héroe en mazmorras escribiendo código Python o JavaScript real. Para atacar, esquivar o recolectar gemas hay que programar el comportamiento del personaje. Los primeros mundos son completamente gratuitos.',
+   m:'Python, JavaScript, lógica de programación gamificada'},
+  {n:'Tynker',l:'f',url:'https://www.tynker.com',
+   d:'Misiones de naves espaciales y batallas mecánicas donde el alumno alterna entre vista de bloques y Python o JavaScript. Currículo de código muy completo para secundaria. El alumno puede ver el mismo programa en bloques y en código en paralelo.',
+   m:'Aprendizaje híbrido bloques y texto en paralelo'},
+  {n:'Code.org — Python Lab',l:'g',url:'https://code.org',
+   d:'IDE amigable para alumnos de 13–18 años que corre Python 3 real en el navegador. Modo visual "Painter" para crear dibujos y animaciones con código. Facilita el paso del pensamiento visual (Scratch) a la escritura lógica de software. 100% gratuito.',
+   m:'Python, pensamiento computacional, aplicaciones visuales'},
+  {n:'Micro:bit',l:'g',url:'https://microbit.org',
+   d:'Editor web para programar una placa microcontroladora física o simulada. El alumno arrastra bloques para activar LEDs, detectar temperatura o controlar motores, y puede alternar de inmediato al código Python equivalente. Todo completamente gratuito.',
+   m:'Robótica simulada, IoT, transición bloques ↔ Python'},
+  {n:'Minecraft Education',l:'p',url:'https://education.minecraft.net',
+   d:'Code Builder (tecla "C") permite programar al robot Agent con bloques MakeCode o Python real desde dentro del juego. Cursos Pi Craft enseñan la constante π con vóxeles. Para Matemáticas: coordenadas 3D, áreas y volúmenes construyendo estructuras a escala.',
+   m:'Python, Geometría 3D, Matemáticas espaciales, proyectos interdisciplinarios'},
+  {n:'CheckiO',l:'f',url:'https://checkio.org',
+   d:'Series de islas temáticas donde el alumno debe resolver retos de programación para "conquistarlas". Comunidad activa que permite ver cómo otros resolvieron el mismo problema de formas más eficientes. Ideal para Python y TypeScript con desafíos progresivos.',
+   m:'Python, TypeScript, resolución creativa de problemas'},
+  {n:'Codewars',l:'f',url:'https://www.codewars.com',
+   d:'Gamificación inspirada en artes marciales: el alumno gana "Katas" (puntos de honor) y sube de rango (Kyu) resolviendo desafíos. Muy motivadora para alumnos avanzados que buscan competir con la comunidad global de programadores.',
+   m:'Programación avanzada, múltiples lenguajes, secundaria avanzada'},
+  {n:'Replit',l:'f',url:'https://replit.com',
+   d:'Entorno de desarrollo gamificado: "Bounties" (retos por recompensas), IA Ghostwriter como asistente y misiones de código diarias. Ejecuta proyectos reales en el navegador sin instalación ni configuración.',
+   m:'Python, JavaScript, desarrollo web — proyectos reales completos'},
+  {n:'Mimo',l:'f',url:'https://getmimo.com',
+   d:'"El Duolingo de la programación": lecciones de 5 minutos, rachas diarias, ligas competitivas y una interfaz muy visual para aprender Python, JavaScript o HTML desde el móvil o la web. Construye el hábito diario de programar.',
+   m:'Python, JavaScript, HTML — hábito diario de programación'},
+  {n:'VEXcode VR',l:'f',url:'https://vr.vex.com',
+   d:'Programa un robot virtual en entornos 3D detallados (laberintos dinámicos, arenas de juego) usando bloques Scratch con lógica de sensores de distancia, parachoques y giroscopios. 100% virtual, sin necesidad de hardware físico.',
+   m:'Robótica 100% virtual — sin necesidad de hardware físico'},
+  {n:'LEGO Education SPIKE Prime',l:'p',url:'https://education.lego.com',
+   d:'El kit físico de robótica escolar por excelencia para secundaria. Combina piezas LEGO con motores de alta precisión y sensores inteligentes. App de programación basada en bloques Scratch con transición directa al código en Python cuando el alumno esté listo.',
+   m:'Diseño industrial, robótica física, variables matemáticas, causa-efecto'},
+  {n:'Makeblock — mBlock / mBot',l:'f',url:'https://mblock.makeblock.com',
+   d:'mBlock es un entorno basado en Scratch para controlar robots mBot de aluminio resistente. La interfaz muestra en tiempo real el código equivalente en Arduino (C++) o Python. Software gratuito en web; robots físicos de pago para máximo potencial.',
+   m:'Ingeniería física, ensamble mecánico, robótica modular'},
+  {n:'CoderZ',l:'p',url:'https://coderz.io',
+   d:'Plataforma virtual e inmersiva para robótica y STEM a través de misiones en 3D. Blockly para programar robots que navegan terrenos peligrosos y resuelven puzzles lógicos de física y geometría. Cursos por edades con gamificación progresiva.',
+   m:'Aprendizaje autodidacta, robótica gamificada, STEM'},
+],
+
+mus:[
+  {n:'Yousician',l:'f',url:'https://yousician.com',
+   d:'El equivalente de Guitar Hero con instrumentos reales o voz propia. La app escucha a través del micrófono y otorga puntos de precisión y ritmo en tiempo real. Lecciones interactivas paso a paso y catálogo enorme de canciones populares por niveles.',
+   m:'Guitarra, Piano, Ukelele, Bajo, Canto'},
+  {n:'Simply Sing / Simply Piano',l:'f',url:'https://www.joytunes.com',
+   d:'Suite JoyTunes: Simply Sing adapta las canciones al rango vocal del alumno en tiempo real con una línea visual a seguir. Simply Piano detecta notas de teclado físico o virtual con correcciones inmediatas. Primeras canciones gratuitas.',
+   m:'Canto, Piano'},
+  {n:'Solfeg.io',l:'f',url:'https://solfeg.io',
+   d:'Para la práctica de banda escolar: muestra pistas simultáneas para piano, guitarra, voz, ukelele y percusión. El alumno silencia instrumentos para escuchar solo su pista, ralentiza el tempo o ve diagramas de acordes mientras suena la canción.',
+   m:'Banda escolar, Guitarra, Ukelele, Teclado, Canto'},
+  {n:'Chrome Music Lab',l:'g',url:'https://musiclab.chromeexperiments.com',new:1,
+   d:'Suite de experimentos musicales interactivos creada por Google. Permite explorar melodías, ritmos, acordes, espectros sonoros y ondas de forma visual y táctil. Completamente gratuita, sin instalación, directamente en el navegador. Ideal para introducir conceptos de teoría musical de forma lúdica.',
+   m:'Teoría musical básica, exploración sonora, todos los niveles'},
+  {n:'Soundtrap (Spotify)',l:'f',url:'https://www.soundtrap.com',new:1,
+   d:'Estudio de grabación colaborativo en la nube, creado por Spotify para educación. Los alumnos graban, mezclan y producen música o podcasts de forma colaborativa en tiempo real desde el navegador. Cuenta con instrumentos virtuales, loops y herramientas de grabación de voz. Muy popular en proyectos de Lengua también.',
+   m:'Producción musical, Podcasts educativos, Lengua, Arte'},
+  {n:'Incredibox',l:'f',url:'https://www.incredibox.com',new:1,
+   d:'Los alumnos crean mezclas musicales originales arrastrando iconos sobre personajes animados que beatboxean, cantan o tocan. Tan intuitivo que no requiere ningún conocimiento musical previo. Versión básica gratuita en navegador; app de pago con más estilos y funcionalidades.',
+   m:'Exploración musical, ritmo, coordinación, creatividad'},
+  {n:'Tonic Music',l:'g',url:'https://tonicapp.io',
+   d:'Gamifica el hábito de práctica: los alumnos abren "estudios virtuales" en vivo para motivarse mutuamente mientras practican. Al acumular minutos de práctica real ganan XP, completan misiones, suben niveles y ganan medallas. 100% gratuita.',
+   m:'Cualquier instrumento — disciplina y consistencia de práctica'},
+  {n:'Flat.io / Noteflight',l:'f',url:'https://flat.io',
+   d:'Composición colaborativa de partituras y tablaturas en la nube. El alumno arrastra notas al pentagrama y escucha de inmediato cómo suena con instrumentos digitales de alta calidad. Facilita la comprensión de teoría musical sin frustraciones.',
+   m:'Teoría musical, Composición, Lenguaje musical'},
+  {n:'Singeo',l:'p',url:'https://www.singeo.com',
+   d:'Plataforma completa para aprender canto de forma técnica. Combina lecciones en video estructuradas con ejercicios interactivos de calentamiento, escalas y entrenamiento auditivo. Retroalimentación de profesores y comunidad activa. Período de prueba gratuito.',
+   m:'Técnica vocal, Afinación, Cuidado de la voz'},
+],
+
+len:[
+  {n:'CommonLit',l:'g',url:'https://www.commonlit.org',
+   d:'Enorme biblioteca digital con textos literarios e históricos en español e inglés. A medida que el alumno lee, la plataforma libera preguntas de comprensión integradas que evalúan análisis crítico e interpretación. 100% gratuita para escuelas públicas, docentes y alumnos.',
+   m:'Comprensión lectora, Lengua, Literatura, Inglés'},
+  {n:'Newsela',l:'f',url:'https://newsela.com',new:1,
+   d:'Artículos de noticias reales adaptados automáticamente a 5 niveles de lectura diferentes. El mismo artículo de actualidad puede leerse en nivel básico o avanzado según el alumno. Con preguntas de comprensión y debate integrados. Muy útil para trabajar ciudadanía y actualidad en Lengua. Plan básico gratuito.',
+   m:'Comprensión lectora, actualidad, ciudadanía, Inglés y Español'},
+  {n:'Voyant Tools',l:'g',url:'https://voyant-tools.org',
+   d:'Análisis de textos que visualiza gráficamente un corpus literario completo: nubes de palabras, gráficos de frecuencia de términos, redes de relaciones con un solo clic. Ideal para literatura comparada y análisis cuantitativo. 100% gratuita.',
+   m:'Literatura comparada, análisis cuantitativo de textos'},
+  {n:'Grammarly',l:'f',url:'https://www.grammarly.com',
+   d:'Editor de estilo en tiempo real: ayuda a reescribir oraciones para mejorar claridad, coherencia, tono y fluidez en inglés. Va mucho más allá de la ortografía básica. Corrección básica gratuita; sugerencias avanzadas con planes premium.',
+   m:'Escritura en inglés, gramática formal, expresión escrita'},
+  {n:'LanguageTool',l:'f',url:'https://languagetool.org',
+   d:'Editor gramatical inteligente en tiempo real para más de 30 idiomas, incluido el español con variantes regionales. Detecta errores de estilo, puntuación y concordancia que otros correctores no identifican. Extensión de navegador gratuita.',
+   m:'Español, Inglés, redacción académica, ortografía'},
+  {n:'Duolingo Max',l:'f',url:'https://www.duolingo.com',
+   d:'El estándar de oro en gamificación para idiomas. La versión Max usa IA para juegos de rol interactivos y conversaciones simuladas con personajes virtuales que explican personalización el origen de cada error. Estructura básica gratis; Max requiere suscripción.',
+   m:'Inglés, lenguas extranjeras, vocabulario contextualizado'},
+  {n:'Mindomo — Filosofía',l:'f',url:'https://www.mindomo.com',
+   d:'Mapas mentales y conceptuales para mapear dilemas éticos y corrientes filosóficas de forma visual y colaborativa. Permite estructurar debates, argumentaciones y relaciones entre conceptos filosóficos con ramas interactivas en tiempo real.',
+   m:'Filosofía — ética, corrientes filosóficas, argumentación'},
+],
+
+dis:[
+  {n:'Canva for Education',l:'g',url:'https://www.canva.com/education/',new:1,
+   d:'La plataforma de diseño visual más adoptada en educación secundaria a nivel mundial. 100% gratuita para docentes y alumnos de instituciones educativas verificadas. Permite crear infografías, presentaciones, afiches, líneas de tiempo, murales digitales y más con una biblioteca de millones de elementos. Incluye herramientas de colaboración en tiempo real.',
+   m:'Cualquier materia — diseño de contenido visual, presentaciones, proyectos'},
+  {n:'Adobe Express',l:'g',url:'https://www.adobe.com/express/learn/education',new:1,
+   d:'Plataforma creativa de Adobe, completamente gratuita para estudiantes y docentes. Permite crear videos animados, infografías, posts, presentaciones y páginas web de forma rápida y profesional. Integra herramientas de IA para generar imágenes, eliminar fondos y animar texto. Muy intuitiva para adolescentes.',
+   m:'Diseño visual, video, marketing, proyectos interdisciplinarios'},
+  {n:'Book Creator',l:'f',url:'https://bookcreator.com',new:1,
+   d:'Permite a los alumnos crear libros digitales interactivos combinando texto, imágenes, audio, video y garabatos. Los libros se publican en una biblioteca escolar colaborativa. Ideal para proyectos de escritura creativa, libros de ciencias, portafolios digitales y comic strips. Primera "biblioteca" de 40 libros gratuita.',
+   m:'Lengua, Ciencias, Proyectos creativos, portafolios digitales'},
+  {n:'Prezi',l:'f',url:'https://prezi.com',new:1,
+   d:'Presentaciones cinematográficas con zoom, movimiento y narrativa espacial. En lugar de diapositivas lineales, Prezi permite crear un lienzo infinito donde las ideas se revelan con transiciones dinámicas. En 2026 integra IA para generar presentaciones desde un prompt de texto. Licencia educativa gratuita para estudiantes.',
+   m:'Presentaciones de proyectos, exposiciones orales, cualquier materia'},
+  {n:'Pixton — Cómics Educativos',l:'f',url:'https://www.pixton.com',new:1,
+   d:'Plataforma para crear cómics y novelas gráficas con personajes 3D totalmente personalizables, fondos y globos de diálogo. Los alumnos narran historias, explican procesos científicos o representan eventos históricos en formato cómic. Plan gratuito limitado; plan educativo ~$5 USD/mes por aula.',
+   m:'Lengua, Historia, Ciencias — narración visual y creación de contenido'},
+],
+
+ges:[
+  {n:'ClassDojo',l:'g',url:'https://www.classdojo.com',new:1,
+   d:'La plataforma de gestión del aula y comunicación familia-escuela más usada del mundo. Los docentes otorgan puntos por comportamientos positivos, los alumnos crean portafolios digitales de su trabajo y las familias siguen el progreso en tiempo real. En 2026 incorpora análisis de IA del clima de aula. 100% gratuita.',
+   m:'Gestión del aula, comunicación con familias, portafolio digital del alumno'},
+  {n:'Padlet',l:'f',url:'https://padlet.com',new:1,
+   d:'Pizarra digital infinita y colaborativa donde los alumnos y docentes pueden publicar texto, imágenes, videos, enlaces y archivos. Permite crear murales de ideas, líneas de tiempo colaborativas, colecciones de recursos y tableros de Kanban para proyectos grupales. Plan gratuito con 3 padlets activos.',
+   m:'Colaboración, lluvia de ideas, proyectos grupales, cualquier materia'},
+  {n:'Nearpod',l:'f',url:'https://nearpod.com',new:1,
+   d:'Transforma cualquier presentación de Google Slides o PowerPoint en una lección interactiva en tiempo real. Los alumnos responden polls, dibujan en pizarras, debaten y acceden a videos de VR desde sus propios dispositivos mientras el docente controla el ritmo de avance. Integra IA para generar preguntas automáticas.',
+   m:'Cualquier materia — presentaciones interactivas sincrónicas'},
+  {n:'Pear Deck',l:'f',url:'https://www.peardeck.com',new:1,
+   d:'Add-on para Google Slides y PowerPoint que convierte cada diapositiva en una actividad interactiva: preguntas de opción múltiple, dibujo libre, deslizadores, texto abierto. El docente ve todas las respuestas de los alumnos en tiempo real en su pantalla. Plan básico integrado con Google Workspace gratis.',
+   m:'Cualquier materia — evaluación formativa durante la clase'},
+  {n:'Flip (Flipgrid, Microsoft)',l:'g',url:'https://flip.com',new:1,
+   d:'Plataforma de Microsoft para debates y discusiones asíncronas por video. Los alumnos graban respuestas de video cortas a las preguntas del docente y pueden comentar las respuestas de sus compañeros. Ideal para oratoria, debate y reflexión en grupos grandes. 100% gratuita para educación.',
+   m:'Oratoria, debate, reflexión, Lengua, Filosofía, Idiomas'},
+  {n:'Seesaw',l:'f',url:'https://web.seesaw.me',new:1,
+   d:'Portafolio digital donde los alumnos documentan su aprendizaje con fotos, videos, grabaciones de voz, dibujos y archivos. Los docentes asignan actividades y las familias siguen el progreso. Crea un registro evolutivo del trabajo de cada alumno a lo largo del año. Plan básico gratuito muy completo.',
+   m:'Portafolio digital, evaluación continua, comunicación con familias'},
+  {n:'Miro',l:'f',url:'https://miro.com/education/',new:1,
+   d:'La pizarra colaborativa infinita preferida por equipos profesionales, adaptada para educación. Los alumnos trabajan en tiempo real sobre un canvas compartido con sticky notes, mapas mentales, diagramas, wireframes y marcos de Design Thinking. Plan gratuito para estudiantes y docentes.',
+   m:'Proyectos colaborativos, Design Thinking, brainstorming, cualquier área'},
+],
+
+rea:[
+  {n:'SmartGuide',l:'f',url:'https://www.smartguide.app',
+   d:'Usa GPS y balizas Bluetooth para disparar audios e historias cuando el alumno llega a un punto físico específico (museo, patio del colegio, barrio histórico). El docente crea una gincana educativa donde la IA narra el siguiente reto al llegar a cada ubicación.',
+   m:'Excursiones, museos, historia urbana, orientación geográfica'},
+  {n:'Zappar / Mattercraft',l:'f',url:'https://www.zappar.com',
+   d:'Realidad Aumentada que no requiere descarga de app (WebAR). El alumno escanea un código QR en una estatua, planta o panel y un avatar de IA aparece sobre la cámara del móvil para explicar el tema con animaciones 3D superpuestas al entorno real.',
+   m:'Realidad Aumentada, ciencias naturales, historia, biología'},
+  {n:'Ondoku3',l:'f',url:'https://ondoku3.com',
+   d:'Genera audioguías de alta calidad con etiquetas de tiempo precisas para recorridos físicos. Permite crear guías narradas sincronizadas con GPS para que el alumno escuche la explicación exacta en el momento en que llega a cada punto del recorrido.',
+   m:'Recorridos históricos, museos, visitas guiadas educativas'},
+],
+
+};
+
+// ─── RENDER ────────────────────────────────────────────────────────
+const LBL = {g:'Gratis',f:'Freemium',p:'De Pago'};
+const LCL = {g:'lic-g',f:'lic-f',p:'lic-p'};
+
+function card(t) {
+  const primary = mshots(t.url);
+  const fallback = thum(t.url);
+  const newTag = t.new ? '<span class="new-badge">★ Nueva</span>' : '';
+  return `<div class="card">
+    <div class="cimg">
+      <div class="cfb"><div class="cfb-icon">🌐</div><div class="cfb-name">${t.n}</div></div>
+      <img
+        src="${primary}"
+        alt="Previsualización de ${t.n}"
+        loading="lazy"
+        data-fb="${fallback}"
+        data-tried="0"
+        onload="this.classList.add('vis')"
+        onerror="imgFail(this)"
+      >
+      <div class="cov"></div>
+    </div>
+    <div class="cbody">
+      <div class="chead">
+        <span class="cname">${t.n}${newTag}</span>
+        <span class="lic ${LCL[t.l]}">${LBL[t.l]}</span>
+      </div>
+      <p class="cdesc">${t.d}</p>
+    </div>
+    <div class="cfoot">
+      <span class="cmat"><strong>Mejor para:</strong> ${t.m}</span>
+      <a class="clink" href="${t.url}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 10L10 2M5 2h5v5"/></svg>
+        Abrir sitio
+      </a>
+    </div>
+  </div>`;
+}
+
+function imgFail(img) {
+  if (img.dataset.tried === '0') {
+    img.dataset.tried = '1';
+    img.src = img.dataset.fb;
+  } else {
+    img.style.display = 'none';
+  }
+}
+
+Object.entries(T).forEach(([k, tools]) => {
+  const el = document.getElementById('grid-' + k);
+  if (el) el.innerHTML = tools.map(card).join('');
+});
+
+// Expose imgFail globally
+window.imgFail = imgFail;
+
+// Active nav on scroll
+const navLinks = document.querySelectorAll('.nav-a');
+document.querySelectorAll('section[id]').forEach(sec => {
+  new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting)
+      navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + sec.id));
+  }, { rootMargin: '-40% 0px -50% 0px' }).observe(sec);
+});
+</script>
+</body>
+</html>
